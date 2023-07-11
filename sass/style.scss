@@ -4,15 +4,58 @@
 body {
     background-color: lemonchiffon;
 
-    video {
-        position: fixed;
-        z-index: -1;
+    #searchBox {
+        width: 100%;
+        padding: 50px 60px 0px;
+        font-size: 0;
+
+        #search {
+            width: 300px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 3px dotted yellowgreen;
+            padding-left: 10px;
+            outline: none;
+        }
+
+        .btnSearch {
+            width: 80px;
+            height: 30px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background-color: yellowgreen;
+            font: bold 14px/1 "맑은고딕";
+            text-align: center;
+            margin-left: 10px;
+            vertical-align: top;
+            border: 3px dotted yellowgreen;
+            transition: 0.3s;
+
+            &:hover {
+                background-color: #ffffff;
+            }
+        }
     }
 
     #wrap {
         width: 100%;
         padding: 50px;
         overflow: hidden;
+
+        .loading {
+            width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: 1s;
+            opacity: 1;
+
+            &.off {
+                opacity: 0;
+            }
+        }
 
         #list {
             opacity: 0;
