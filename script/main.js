@@ -27,14 +27,6 @@ const loading = document.querySelector(".loading");
 
 callData(url2);
 
-searcBtn.addEventListener("click", () => {
-    //버튼을 클릭하면 input태그에 사용자가 넣은 값을 가져와서 url안의 tags에 넣고
-    //해당 url을 callData()의 인수자리에 넣어서 해당값을 검색하도록 하는 코딩
-    let tag = input.value;
-    const url = `${base}method=${method2}&api_key=${key}&per_page=${per_page}&format=${format}&nojsoncallback=1&tags=${tag}&privacy_filter=1`;
-
-    callData(url)
-})
 
 function callData(url) {
     frame.innerHTML = "";
@@ -54,8 +46,104 @@ function callData(url) {
             console.log(items);
             createList(items);
             delayLoading();
+            searcBtn.addEventListener("click", () => {
+                //버튼을 클릭하면 input태그에 사용자가 넣은 값을 가져와서 url안의 tags에 넣고
+                //해당 url을 callData()의 인수자리에 넣어서 해당값을 검색하도록 하는 코딩
+                let tag = input.value;
+                tag = tag.trim();
+                const url = `${base}method=${method2}&api_key=${key}&per_page=${per_page}&format=${format}&nojsoncallback=1&tags=${tag}&privacy_filter=1`;
+                if (tag != "") {
+                    if (!items.length == 0) {
+                        callData(url)
+                    } else {
+                        //검색결과가 없습니다.
+                        frame.innerHTML = "";
+                        frame.style.height = "auto";
+                        frame.classList.remove("on");
+
+                        let isErrMsgs = frame.parentElement.querySelectorAll("p");
+                        if (isErrMsgs.length > 0) {
+                            frame.parentElement.querySelector("p").remove();
+                        }
+
+                        let errMsgs = document.createElement("P");
+                        errMsgs.append("검색결과가 없습니다.")
+                        frame.parentElement.append(errMsgs);
+                    }
+
+                } else {
+                    //로딩바를 없애고, 높이값도 초기화하고, p태그를 만들어서 경고문구를 출력
+                    frame.innerHTML = ""; //높이값을 초기화하기 위해서 우선 빈 html을 만들어줌
+                    frame.style.height = "auto";
+                    frame.classList.remove("on");
+
+                    //p태그를 만들고 경고문구를 출력하는 코드를 만들기
+                    let isErrMsgs = frame.parentElement.querySelectorAll("p");
+                    if (isErrMsgs.length > 0) {
+                        frame.parentElement.querySelector("p").remove();
+                    }
+                    let errMsgs = document.createElement("P");
+                    errMsgs.append("검색어를 쓰지 않았습니다. 검색어를 입력하세요.")
+                    frame.parentElement.append(errMsgs);
+                    //parentElement 부모요소를 찾음
+                    //closet = 가까운 요소를 찾음
+                }
+                callData(url)
+            })
+
+            input.addEventListener("keyup", (e) => {
+                if (e.key === "Enter") {
+                    // if (e.keyCode === "13") 
+                    let tag = input.value;
+                    tag = tag.trim();
+                    const url = `${base}method=${method2}&api_key=${key}&per_page=${per_page}&format=${format}&nojsoncallback=1&tags=${tag}&privacy_filter=1`;
+
+                    if (tag != "") {
+                        if (!items.length == 0) {
+                            callData(url)
+                        } else {
+                            //검색결과가 없습니다.
+                            frame.innerHTML = "";
+                            frame.style.height = "auto";
+                            frame.classList.remove("on");
+
+                            let isErrMsgs = frame.parentElement.querySelectorAll("p");
+                            if (isErrMsgs.length > 0) {
+                                frame.parentElement.querySelector("p").remove();
+                            }
+                            let errMsgs = document.createElement("P");
+                            errMsgs.append("검색결과가 없습니다.")
+                            frame.parentElement.append(errMsgs);
+                        }
+                    } else {
+                        //로딩바를 없애고, 높이값도 초기화하고, p태그를 만들어서 경고문구를 출력
+                        frame.innerHTML = ""; //높이값을 초기화하기 위해서 우선 빈 html을 만들어줌
+                        frame.style.height = "auto";
+                        frame.classList.remove("on");
+
+                        //p태그를 만들고 경고문구를 출력하는 코드를 만들기
+                        let isErrMsgs = frame.parentElement.querySelectorAll("p");
+                        if (isErrMsgs.length > 0) {
+                            frame.parentElement.querySelector("p").remove();
+                        }
+                        let errMsgs = document.createElement("P");
+                        errMsgs.append("검색어를 쓰지 않았습니다. 검색어를 입력하세요.")
+                        //errMsgs.textContent = "검색어를 쓰지 않았습니다. 검색어를 입력하세요."
+                        //errMsgs.innerText = "검색어를 쓰지 않았습니다. 검색어를 입력하세요."
+                        frame.parentElement.append(errMsgs);
+                        //parentElement 부모요소를 찾음
+                        //closet = 가까운 요소를 찾음
+                    }
+
+
+                    //tag의 값이 없을 경우
+                    //검색어가 없습니다 검색어를 입력해주세요 라는 경고문구를 출력할 예정
+
+                }
+            })
         })
 }
+
 function createList(items) {
     let htmls = "";
     items.map((el) => {
@@ -78,6 +166,7 @@ function createList(items) {
     // htmls의 상태는 500개가 만들어진 상태입니다
     frame.innerHTML = htmls;
 }
+
 function delayLoading() {
     const imgs = frame.querySelectorAll("img");
     const len = imgs.length; //이미지태그의 갯수
@@ -99,6 +188,7 @@ function delayLoading() {
         })
     }
 }
+
 function isoLayout() {
     loading.classList.add("off"); //off클래스를 붙여서 로딩바를 지워줍니다.
     frame.classList.add("on");
