@@ -15,6 +15,17 @@ const searcBtn = document.querySelector(".btnSearch");
 const url = `${base}method=${method}&api_key=${key}&per_page=${per_page}&format=${format}&nojsoncallback=1`;
 const url2 = `${base}method=${method2}&api_key=${key}&per_page=${per_page}&format=${format}&nojsoncallback=1&tags=개&privacy_filter=1`;
 const loading = document.querySelector(".loading");
+
+let aaa = document.querySelector(".item a");
+console.log(aaa);
+/*
+item(가상돔)은 동적으로 생성된 요소이기 때문에 직접적인 
+querySelector로 직접적인
+참조를 할수가 없습니다 => 해결책은 이벤트 위임입니다
+즉 실제 존재하는 부모태그인 #list(리얼돔)에 이벤트를 위임해서
+클릭이벤트를 전달해야합니다.
+*/
+
 /*
 코딩이라는 것은 결국은 글쓰기
 중요한것은 혼자만의 일이 아니라는 것
