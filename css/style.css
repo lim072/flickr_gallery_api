@@ -67,7 +67,7 @@ body #wrap .loading.off {
 }
 body #wrap #list {
   opacity: 0;
-  transform: translateY(100PX);
+  transform: translateY(100px);
   transition: 1s;
 }
 body #wrap #list.on {
@@ -99,6 +99,27 @@ body #wrap #list li div p {
   color: #333;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+body aside {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body aside img {
+  height: 100%;
+}
+body aside span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
